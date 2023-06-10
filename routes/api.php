@@ -48,6 +48,33 @@ Route::apiResource('companies', CompanyController::class);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
+<<<<<<< HEAD
+=======
+    // Route::post('auth/register', [AuthController::class, 'store']); //CREAR USUARIOS
+    // Route::get('/auth', [AuthController::class, 'index']);
+    // Route::get('/auth/show/{id}', [AuthController::class, 'show']);
+    // Route::put('/auth/update/{id}', [AuthController::class, 'update']);
+    // Route::delete('/auth/destroy/{id}', [AuthController::class, 'destroy']);
+
+    Route::apiResource('users', AuthController::class); //USUARIOS
+
+
+    Route::apiResource('roles', RoleController::class); //ROLES
+
+    // ================================= GASTOS
+    Route::apiResource('bills', BillController::class); //GASTOS
+    Route::apiResource('average-expenses', AverageExpenseController::class); //PROMEDIO GASTOS
+
+    // ================================= GANANCIAS
+    Route::apiResource('banks', BankController::class); //BANCOS
+    Route::apiResource('revenue', RevenueController::class); // GANACIAS
+    Route::apiResource('average-earnings', AverageEarningController::class); //PROMEDIO GANACIAS
+
+    // ================================= CAJA CHICA
+    Route::apiResource('petty_cash', PettyCashController::class);
+    Route::apiResource('zones', ZoneController::class);
+    Route::apiResource('companies', CompanyController::class);
+>>>>>>> 466432a41b9e38be95c7793adf7d63644b5b2d13
 
 
 });

@@ -41,33 +41,6 @@ class BankController extends Controller
         $bank = Bank::findOrFail($id);
         return response()->json($bank);
     }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $bank = Bank::findOrFail($id);
-    //     $bankData = $request->all();
-
-    //     // Verifica si se envió una imagen
-    //     if ($request->hasFile('slog')) {
-    //         $image = $request->file('slog');
-
-    //         // Genera un nombre único para la imagen
-    //         $imageName = time() . '.' . $image->getClientOriginalExtension();
-
-    //         // Guarda la imagen en el directorio de almacenamiento
-    //         $image->storeAs('public/banks', $imageName);
-
-    //         // Asigna la ruta de la imagen al campo "slog"
-    //         $bankData['slog'] = 'banks/' . $imageName;
-
-    //         // Elimina la imagen anterior
-    //         Storage::disk('public')->delete($bank->slog);
-    //     }
-
-    //     $bank->update($bankData);
-    //     return response()->json($bank, 200);
-    // }
-
     public function update(Request $request, $id)
     {
         // Encuentra el registro de Bank por su ID

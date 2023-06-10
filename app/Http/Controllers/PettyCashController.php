@@ -17,7 +17,6 @@ class PettyCashController extends Controller
 
     public function create()
     {
-        // Obtener las zonas y las compañías para llenar los campos select del formulario
         $zones = Zone::all();
         $companies = Company::all();
 
@@ -29,7 +28,6 @@ class PettyCashController extends Controller
 
     public function store(Request $request)
     {
-        // Validar los datos de entrada
         $validatedData = $request->validate([
             'month' => 'required|string',
             'day' => 'required|integer',
@@ -39,7 +37,6 @@ class PettyCashController extends Controller
             'company_id' => 'required|exists:companies,id',
         ]);
 
-        // Crear una nueva instancia de PettyCash con los datos validados
         $pettyCash = PettyCash::create($validatedData);
 
         return response()->json($pettyCash, 201);
@@ -58,14 +55,12 @@ class PettyCashController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Buscar el registro de PettyCash
         $pettyCash = PettyCash::find($id);
 
         if (!$pettyCash) {
             return response()->json(['message' => 'Petty cash not found'], 404);
         }
 
-        // Validar los datos de entrada
         $validatedData = $request->validate([
             'month' => 'required|string',
             'day' => 'required|integer',
@@ -75,7 +70,6 @@ class PettyCashController extends Controller
             'company_id' => 'required|exists:companies,id',
         ]);
 
-        // Actualizar los datos del registro
         $pettyCash->update($validatedData);
 
         return response()->json($pettyCash);

@@ -17,7 +17,6 @@ class ZoneController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string',
-            // Agrega aquí las demás validaciones para los campos de la tabla 'zone'
         ]);
 
         $zone = Zone::create($validatedData);
@@ -46,7 +45,6 @@ class ZoneController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|string',
-            // Agrega aquí las demás validaciones para los campos de la tabla 'zone'
         ]);
 
         $zone->update($validatedData);
