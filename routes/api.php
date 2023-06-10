@@ -28,55 +28,73 @@ use Illuminate\Support\Facades\Route;
 Route::post('auth/login', [AuthController::class, 'login']); //INICIAR SESIÓN
 
 
-Route::post('auth/register', [AuthController::class, 'create']); //CREAR USUARIOS
+Route::middleware(['auth:sanctum'])->group(function () {
 
-Route::apiResource('roles', RoleController::class); //ROLES
-
-// ================================= GASTOS
-Route::apiResource('bills', BillController::class); //GASTOS
-Route::apiResource('average-expenses', AverageExpenseController::class); //PROMEDIO GASTOS
-
-// ================================= GANANCIAS
-Route::apiResource('banks', BankController::class); //BANCOS
-Route::apiResource('revenue', RevenueController::class); // GANACIAS
-Route::apiResource('average-earnings', AverageEarningController::class); //PROMEDIO GANACIAS
-
-// ================================= CAJA CHICA
-Route::apiResource('petty_cash', PettyCashController::class);
-Route::apiResource('zones', ZoneController::class);
-Route::apiResource('companies', CompanyController::class);
-
-// Route::middleware(['auth:sanctum'])->group(function () {
-
-    Route::post('auth/register', [AuthController::class, 'store']); //CREAR USUARIOS
-    Route::get('/auth', [AuthController::class, 'index']);
-    Route::get('/auth/show/{id}', [AuthController::class, 'show']);
-    Route::put('/auth/update/{id}', [AuthController::class, 'update']);
-    Route::delete('/auth/destroy/{id}', [AuthController::class, 'destroy']);
-
-    Route::apiResource('users', AuthController::class); //USUARIOS
+    // ------------------------------ ROLES
+    Route::get('/users', [AuthController::class, 'index']);
+    Route::post('/users-create', [AuthController::class, 'store']);
+    Route::get('/users-show/{id}', [AuthController::class, 'show']);
+    Route::put('/users-update/{id}', [AuthController::class, 'update']);
+    Route::delete('/users-destroy/{id}', [AuthController::class, 'destroy']);
 
 
-    Route::apiResource('roles', RoleController::class); //ROLES
 
-    // ================================= GASTOS
-    Route::apiResource('bills', BillController::class); //GASTOS
-    Route::apiResource('average-expenses', AverageExpenseController::class); //PROMEDIO GASTOS
-
-    // ================================= GANANCIAS
-    Route::apiResource('banks', BankController::class); //BANCOS
-    Route::apiResource('revenue', RevenueController::class); // GANACIAS
-    Route::apiResource('average-earnings', AverageEarningController::class); //PROMEDIO GANACIAS
-
-    // ================================= CAJA CHICA
-    Route::apiResource('petty_cash', PettyCashController::class);
-    Route::apiResource('zones', ZoneController::class);
-    Route::apiResource('companies', CompanyController::class);
+    // ------------------------------ ROLES
+    Route::get('/roles', [RoleController::class, 'index']);
+    Route::post('/roles-create', [RoleController::class, 'store']);
+    Route::get('/roles-show/{id}', [RoleController::class, 'show']);
+    Route::put('/roles-update/{id}', [RoleController::class, 'update']);
+    Route::delete('/roles-destroy/{id}', [RoleController::class, 'destroy']);
 
 
-// });
+    // ------------------------------- GASTOS
+    Route::get('/gastos', [BillController::class, 'index']);
+    Route::post('/gastos-create', [BillController::class, 'store']);
+    Route::get('/gastos-show/{id}', [BillController::class, 'show']);
+    Route::put('/gastos-update/{id}', [BillController::class, 'update']);
+    Route::delete('/gastos-destroy/{id}', [BillController::class, 'destroy']);
+
+    // ------------------------------ BANCOS
+    Route::get('/banco', [BankController::class, 'index']);
+    Route::post('/banco-create', [BankController::class, 'store']);
+    Route::get('/banco-show/{id}', [BankController::class, 'show']);
+    Route::put('/banco-update/{id}', [BankController::class, 'update']);
+    Route::delete('/banco-destroy/{id}', [BankController::class, 'destroy']);
+
+
+    // --------------------------------- INGRESOS
+    Route::get('/ingresos', [RevenueController::class, 'index']);
+    Route::post('/ingresos-create', [RevenueController::class, 'store']);
+    Route::get('/ingresos-show/{id}', [RevenueController::class, 'show']);
+    Route::put('/ingresos-update/{id}', [RevenueController::class, 'update']);
+    Route::delete('/ingresos-destroy/{id}', [RevenueController::class, 'destroy']);
+
+
+    // --------------------------------- CAJA CHICA
+    Route::get('/caja_chica', [PettyCashController::class, 'index']);
+    Route::post('/caja_chica-create', [PettyCashController::class, 'store']);
+    Route::get('/caja_chica-show/{id}', [PettyCashController::class, 'show']);
+    Route::put('/caja_chica-update/{id}', [PettyCashController::class, 'update']);
+    Route::delete('/caja_chica-destroy/{id}', [PettyCashController::class, 'destroy']);
+
+    // --------------------------------- ZONA
+    Route::get('/zona', [ZoneController::class, 'index']);
+    Route::post('/zona', [ZoneController::class, 'store']);
+    Route::get('/zona/{id}', [ZoneController::class, 'show']);
+    Route::put('/zona/{id}', [ZoneController::class, 'update']);
+    Route::delete('/zona/{id}', [ZoneController::class, 'destroy']);
+
+    // --------------------------------- EMPRESA
+    Route::get('/empresa', [CompanyController::class, 'index']);
+    Route::post('/empresa-create', [CompanyController::class, 'store']);
+    Route::get('/empresa-show/{id}', [CompanyController::class, 'show']);
+    Route::put('/empresa-update/{id}', [CompanyController::class, 'update']);
+    Route::delete('/empresa-destroy/{id}', [CompanyController::class, 'destroy']);
+});
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
 // Gerente
+    // Route::apiResource('average-earnings', AverageEarningController::class); //PROMEDIO GANACIAS
+    // Route::apiResource('average-expenses', AverageExpenseController::class); //PROMEDIO GASTOS
