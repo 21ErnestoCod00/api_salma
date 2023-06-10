@@ -28,26 +28,26 @@ use Illuminate\Support\Facades\Route;
 Route::post('auth/login', [AuthController::class, 'login']); //INICIAR SESIÓN
 
 
+Route::post('auth/register', [AuthController::class, 'create']); //CREAR USUARIOS
+
+Route::apiResource('roles', RoleController::class); //ROLES
+
+// ================================= GASTOS
+Route::apiResource('bills', BillController::class); //GASTOS
+Route::apiResource('average-expenses', AverageExpenseController::class); //PROMEDIO GASTOS
+
+// ================================= GANANCIAS
+Route::apiResource('banks', BankController::class); //BANCOS
+Route::apiResource('revenue', RevenueController::class); // GANACIAS
+Route::apiResource('average-earnings', AverageEarningController::class); //PROMEDIO GANACIAS
+
+// ================================= CAJA CHICA
+Route::apiResource('petty_cash', PettyCashController::class);
+Route::apiResource('zones', ZoneController::class);
+Route::apiResource('companies', CompanyController::class);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::post('auth/register', [AuthController::class, 'create']); //CREAR USUARIOS
-
-    Route::apiResource('roles', RoleController::class); //ROLES
-
-    // ================================= GASTOS
-    Route::apiResource('bills', BillController::class); //GASTOS
-    Route::apiResource('average-expenses', AverageExpenseController::class); //PROMEDIO GASTOS
-
-    // ================================= GANANCIAS
-    Route::apiResource('banks', BankController::class); //BANCOS
-    Route::apiResource('revenue', RevenueController::class); // GANACIAS
-    Route::apiResource('average-earnings', AverageEarningController::class); //PROMEDIO GANACIAS
-
-    // ================================= CAJA CHICA
-    Route::apiResource('petty_cash', PettyCashController::class);
-    Route::apiResource('zones', ZoneController::class);
-    Route::apiResource('companies', CompanyController::class);
 
 
 });
