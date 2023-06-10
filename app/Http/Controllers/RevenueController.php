@@ -12,10 +12,10 @@ class RevenueController extends Controller
     // ========================================= GANANCIAS
 
     public function index()
-    {
-        $Revenues = Revenue::with('bank')->orderBy('date', 'desc')->get();
-        return response()->json($Revenues);
-    }
+{
+    $revenues = Revenue::with('bank')->orderBy('date', 'desc')->get();
+    return response()->json($revenues);
+}
 
     public function store(Request $request)
     {
