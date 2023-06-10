@@ -21,12 +21,10 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        // Validar los datos de entrada
         $request->validate([
             'name' => 'required|unique:roles',
         ]);
 
-        // Crear un nuevo rol
         $role = new Role();
         $role->name = $request->input('name');
         $role->save();
@@ -36,12 +34,10 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validar los datos de entrada
         $request->validate([
             'name' => 'required|unique:roles,name,' . $id,
         ]);
 
-        // Buscar y actualizar el rol
         $role = Role::findOrFail($id);
         $role->name = $request->input('name');
         $role->save();
@@ -51,7 +47,6 @@ class RoleController extends Controller
 
     public function destroy($id)
     {
-        // Buscar y eliminar el rol
         $role = Role::findOrFail($id);
         $role->delete();
 

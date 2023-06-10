@@ -31,7 +31,14 @@ Route::post('auth/login', [AuthController::class, 'login']); //INICIAR SESIÓN
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::post('auth/register', [AuthController::class, 'create']); //CREAR USUARIOS
+    // Route::post('auth/register', [AuthController::class, 'store']); //CREAR USUARIOS
+    // Route::get('/auth', [AuthController::class, 'index']);
+    // Route::get('/auth/show/{id}', [AuthController::class, 'show']);
+    // Route::put('/auth/update/{id}', [AuthController::class, 'update']);
+    // Route::delete('/auth/destroy/{id}', [AuthController::class, 'destroy']);
+
+    Route::apiResource('users', AuthController::class); //USUARIOS
+
 
     Route::apiResource('roles', RoleController::class); //ROLES
 

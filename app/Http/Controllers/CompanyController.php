@@ -17,7 +17,6 @@ class CompanyController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string',
-            // Agrega aquí las demás validaciones para los campos de la tabla 'company'
         ]);
 
         $company = Company::create($validatedData);
@@ -46,7 +45,6 @@ class CompanyController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|string',
-            // Agrega aquí las demás validaciones para los campos de la tabla 'company'
         ]);
 
         $company->update($validatedData);
