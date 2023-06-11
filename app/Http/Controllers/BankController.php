@@ -11,35 +11,6 @@ use Illuminate\Support\Facades\Storage;
 class BankController extends Controller
 {
 
-    // public function index(Request $request)
-    // {
-    //     $year = $request->input('year');
-    //     $month = $request->input('month');
-    //     $bankId = $request->input('bank_id');
-
-    //     $revenues = Revenue::select('revenues.bank_id', 'banks.name', 'banks.slog', DB::raw('SUM(revenues.amount) as total_amount'))
-    //         ->leftJoin('banks', 'banks.id', '=', 'revenues.bank_id')
-    //         ->when($year, function ($query) use ($year) {
-    //             return $query->whereYear('revenues.date', $year);
-    //         })
-    //         ->when($month, function ($query) use ($month) {
-    //             return $query->whereMonth('revenues.date', $month);
-    //         })
-    //         ->when($bankId, function ($query) use ($bankId) {
-    //             return $query->where('revenues.bank_id', $bankId);
-    //         })
-    //         ->groupBy('revenues.bank_id', 'banks.name', 'banks.slog')
-    //         ->get();
-
-    //     foreach ($revenues as $revenue) {
-    //         // $revenue->ulImage = Storage::url('app/public/' . $revenue->slog); 
-    //         $revenue->slog = Storage::url('public/' . $revenue->slog);
-    //     }
-
-    //     return response()->json($revenues);
-    // }
-
-
     public function index(Request $request)
     {
         $year = $request->input('year');
