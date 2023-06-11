@@ -33,15 +33,9 @@ Route::post('auth/login', [AuthController::class, 'login']); //INICIAR SESIÓN
     // ------------------------------ USUARIOS
     Route::get('/users', [AuthController::class, 'index']);
     Route::post('/user-create', [AuthController::class, 'store']);
-<<<<<<< HEAD
     Route::get('/users-show/{id}', [AuthController::class, 'show']);
     Route::put('/users-update/{id}', [AuthController::class, 'update']);
     Route::delete('/users-destroy/{id}', [AuthController::class, 'destroy']);
-=======
-    Route::get('/user-show/{id}', [AuthController::class, 'show']);
-    Route::put('/user-update/{id}', [AuthController::class, 'update']);
-    Route::delete('/user-destroy/{id}', [AuthController::class, 'destroy']);
->>>>>>> 43e95febcb607e6cfe8e179815013d77fd785162
 
 
 
