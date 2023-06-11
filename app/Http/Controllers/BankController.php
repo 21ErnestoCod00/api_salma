@@ -28,7 +28,7 @@ class BankController extends Controller
             ->when($bankId, function ($query) use ($bankId) {
                 return $query->where('revenues.bank_id', $bankId);
             })
-            ->groupBy('revenues.bank_id', 'banks.name', 'banks.name')
+            ->groupBy('revenues.bank_id', 'banks.name', 'banks.slog')
             ->get();
 
         return response()->json($revenues);
