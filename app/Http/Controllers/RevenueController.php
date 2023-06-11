@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use App\Models\Revenue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RevenueController extends Controller
 {
@@ -63,4 +64,34 @@ class RevenueController extends Controller
 
         return response()->json(null, 204);
     }
+
+
+    public function totalGanancias(Request $request)
+    {
+        $year = $request->input('year');
+        $month = $request->input('month');
+
+        $bills = Revenue::select(DB::raw('COALESCE(SUM(amount), 0) as total_amount'))
+            ->when($year, function ($query) use ($year) {
+                return $query->whereYear('date', '=', $year);
+            })
+            ->when($month, function ($query) use ($month) {
+                return $query->whereMonth('date', '=', $month);
+            })
+            ->get();
+
+        return response()->json($bills);
+    }
+
+    public function totalGananciasBanco(Request $request)
+{
+    $bankId = $request->input('bank_id');
+
+    $bills = Revenue::select(DB::raw('COALESCE(SUM(amount), 0) as total_amount'))
+        ->where('bank_id', $bankId)
+        ->get();
+
+    return response()->json($bills);
+}
+
 }

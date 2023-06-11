@@ -28,9 +28,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('auth/login', [AuthController::class, 'login']); //INICIAR SESIÓN
 
 
-Route::middleware(['auth:sanctum'])->group(function () {
+// Route::middleware(['auth:sanctum'])->group(function () {
 
-    // ------------------------------ ROLES
+    // ------------------------------ USUARIOS
     Route::get('/users', [AuthController::class, 'index']);
     Route::post('/users-create', [AuthController::class, 'store']);
     Route::get('/users-show/{id}', [AuthController::class, 'show']);
@@ -53,6 +53,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/gastos-show/{id}', [BillController::class, 'show']);
     Route::put('/gastos-update/{id}', [BillController::class, 'update']);
     Route::delete('/gastos-destroy/{id}', [BillController::class, 'destroy']);
+    Route::get('/totalGastos', [BillController::class, 'totalGastos']);
+
+    
 
     // ------------------------------ BANCOS
     Route::get('/banco', [BankController::class, 'index']);
@@ -68,6 +71,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/ingresos-show/{id}', [RevenueController::class, 'show']);
     Route::put('/ingresos-update/{id}', [RevenueController::class, 'update']);
     Route::delete('/ingresos-destroy/{id}', [RevenueController::class, 'destroy']);
+    Route::get('/totalGanancias', [RevenueController::class, 'totalGanancias']);
+    Route::get('/totalGananciasBanco', [RevenueController::class, 'totalGananciasBanco']);
+
 
 
     // --------------------------------- CAJA CHICA
@@ -90,7 +96,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/empresa-show/{id}', [CompanyController::class, 'show']);
     Route::put('/empresa-update/{id}', [CompanyController::class, 'update']);
     Route::delete('/empresa-destroy/{id}', [CompanyController::class, 'destroy']);
-});
+// });
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();

@@ -12,7 +12,7 @@ class AuthController extends Controller
 
     public function index()
     {
-        $users = User::with('role')->get();
+        $users = User::all();
 
         return response()->json([
             'status' => true,
@@ -22,7 +22,7 @@ class AuthController extends Controller
 
     public function show($id)
     {
-        $user = User::with('role')->findOrFail($id);
+        $user = User::findOrFail($id);
 
         return response()->json([
             'status' => true,
@@ -37,14 +37,15 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'required|min:8',
-            'role_id' => 'required|exists:roles,id',
+            'role' => 'required',
         ]);
 
         $user = User::findOrFail($id);
 
         $user->name = $validatedData['name'];
         $user->email = $validatedData['email'];
-        $user->password = bcrypt($validatedData['password']);
+        $user->password = Hash::make($validatedData['password']);
+
 
         $user->save();
 
@@ -61,14 +62,14 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'role_id' => 'required|exists:roles,id',
+            'role' => 'required',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role_id' => $request->role_id
+            'role' => $request->role
         ]);
 
 
@@ -107,15 +108,13 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $user = User::with('role')->where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
         return response()->json([
-            [
-                'status' => true,
-                'message' => 'Usuario logeado correctamente',
-                'data' => $user,
-                'token' => $user->createToken('API Token')->plainTextToken
-            ]
+            'status' => true,
+            'message' => 'Usuario logeado correctamente',
+            'data' => $user,
+            'token' => $user->createToken('API Token')->plainTextToken
         ], 200);
     }
 }
