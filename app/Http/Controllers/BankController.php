@@ -22,7 +22,7 @@ class BankController extends Controller
         $month = $request->input('month');
         $bankId = $request->input('bank_id');
 
-        $revenues = Revenue::select('revenues.bank_id', 'banks.name', DB::raw('SUM(revenues.amount) as total_amount'))
+        $revenues = Revenue::select('revenues.bank_id', 'banks.name','banks.slog', DB::raw('SUM(revenues.amount) as total_amount'))
             ->leftJoin('banks', 'banks.id', '=', 'revenues.bank_id')
             ->when($year, function ($query) use ($year) {
                 return $query->whereYear('revenues.date', $year);
@@ -33,7 +33,7 @@ class BankController extends Controller
             ->when($bankId, function ($query) use ($bankId) {
                 return $query->where('revenues.bank_id', $bankId);
             })
-            ->groupBy('revenues.bank_id', 'banks.name')
+            ->groupBy('revenues.bank_id', 'banks.name', 'banks.name')
             ->get();
 
         return response()->json($revenues);
