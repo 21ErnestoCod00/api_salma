@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class BankController extends Controller
 {
-    // public function index()
-    // {
-    //     $banks = Bank::all();
-    //     return response()->json($banks);
-    // }
 
     public function index(Request $request)
     {
@@ -38,7 +33,6 @@ class BankController extends Controller
 
         return response()->json($revenues);
     }
-
 
 
     public function store(Request $request)
