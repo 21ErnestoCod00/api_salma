@@ -3,16 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
+use App\Models\Revenue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class BankController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $banks = Bank::all();
+    //     return response()->json($banks);
+    // }
+
+    public function index(Request $request)
     {
-        $banks = Bank::all();
-        return response()->json($banks);
+        $year = $request->input('year');
+        $month = $request->input('month');
+        $bankId = $request->input('bank_id');
+
+        $revenues = Revenue::select('revenues.bank_id', 'banks.name', DB::raw('SUM(revenues.amount) as total_amount'))
+            ->leftJoin('banks', 'banks.id', '=', 'revenues.bank_id')
+            ->when($year, function ($query) use ($year) {
+                return $query->whereYear('revenues.date', $year);
+            })
+            ->when($month, function ($query) use ($month) {
+                return $query->whereMonth('revenues.date', $month);
+            })
+            ->when($bankId, function ($query) use ($bankId) {
+                return $query->where('revenues.bank_id', $bankId);
+            })
+            ->groupBy('revenues.bank_id', 'banks.name')
+            ->get();
+
+        return response()->json($revenues);
     }
+
+
 
     public function store(Request $request)
     {

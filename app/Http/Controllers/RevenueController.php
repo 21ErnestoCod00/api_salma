@@ -25,7 +25,6 @@ class RevenueController extends Controller
         $bank = Bank::findOrFail($bankId);
 
         $Revenue = new Revenue();
-        $Revenue->description = $RevenueData['description'];
         $Revenue->amount = $RevenueData['amount'];
         $Revenue->date = $RevenueData['date'];
 
@@ -39,7 +38,7 @@ class RevenueController extends Controller
         ], 201);
     }
 
-    
+
     public function show($id)
     {
         $Revenue = Revenue::with('bank')->findOrFail($id);
@@ -49,7 +48,6 @@ class RevenueController extends Controller
     public function update(Request $request, $id)
     {
         $Revenue = Revenue::findOrFail($id);
-        $Revenue->description = $request->input('description');
         $Revenue->amount = $request->input('amount');
         $Revenue->date = $request->input('date');
         $Revenue->save();
@@ -66,32 +64,31 @@ class RevenueController extends Controller
     }
 
 
-    public function totalGanancias(Request $request)
-    {
-        $year = $request->input('year');
-        $month = $request->input('month');
+    // public function totalGanancias(Request $request)
+    // {
+    //     $year = $request->input('year');
+    //     $month = $request->input('month');
 
-        $bills = Revenue::select(DB::raw('COALESCE(SUM(amount), 0) as total_amount'))
-            ->when($year, function ($query) use ($year) {
-                return $query->whereYear('date', '=', $year);
-            })
-            ->when($month, function ($query) use ($month) {
-                return $query->whereMonth('date', '=', $month);
-            })
-            ->get();
+    //     $bills = Revenue::select(DB::raw('COALESCE(SUM(amount), 0) as total_amount'))
+    //         ->when($year, function ($query) use ($year) {
+    //             return $query->whereYear('date', '=', $year);
+    //         })
+    //         ->when($month, function ($query) use ($month) {
+    //             return $query->whereMonth('date', '=', $month);
+    //         })
+    //         ->get();
 
-        return response()->json($bills);
-    }
+    //     return response()->json($bills);
+    // }
 
-    public function totalGananciasBanco(Request $request)
-{
-    $bankId = $request->input('bank_id');
+    // public function totalGananciasBanco(Request $request)
+    // {
+    //     $bankId = $request->input('bank_id');
 
-    $bills = Revenue::select(DB::raw('COALESCE(SUM(amount), 0) as total_amount'))
-        ->where('bank_id', $bankId)
-        ->get();
+    //     $bills = Revenue::select(DB::raw('COALESCE(SUM(amount), 0) as total_amount'))
+    //         ->where('bank_id', $bankId)
+    //         ->get();
 
-    return response()->json($bills);
-}
-
+    //     return response()->json($bills);
+    // }
 }

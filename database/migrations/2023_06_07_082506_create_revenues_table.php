@@ -15,7 +15,6 @@ return new class extends Migration
         // ESTA TABLA ES DE LOS INGRESOS
         Schema::create('revenues', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
             $table->decimal('amount',14,2);
             $table->date('date');
             $table->unsignedBigInteger('bank_id');
