@@ -11,7 +11,7 @@ class Revenue extends Model
 
     protected $table = 'revenues';
 
-    protected $fillable = ['description', 'amount', 'date'];
+    protected $fillable = ['amount', 'date', 'bank_id'];
 
     // Define la relación con la tabla "bank"
     public function bank()

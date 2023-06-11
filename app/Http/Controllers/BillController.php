@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use App\Models\bill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BillController extends Controller
 {
@@ -55,5 +56,22 @@ class BillController extends Controller
         $bill = Bill::findOrFail($id);
         $bill->delete();
         return response()->json(null, 204);
+    }
+
+    public function totalGastos(Request $request)
+    {
+        $year = $request->input('year');
+        $month = $request->input('month');
+
+        $bills = Bill::select(DB::raw('COALESCE(SUM(amount), 0) as total_amount'))
+            ->when($year, function ($query) use ($year) {
+                return $query->whereYear('date', '=', $year);
+            })
+            ->when($month, function ($query) use ($month) {
+                return $query->whereMonth('date', '=', $month);
+            })
+            ->get();
+
+        return response()->json($bills);
     }
 }
