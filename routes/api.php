@@ -33,32 +33,38 @@ Route::post('auth/login', [AuthController::class, 'login']); //INICIAR SESIÓN
     // ------------------------------ USUARIOS
     Route::get('/users', [AuthController::class, 'index']);
     Route::post('/user-create', [AuthController::class, 'store']);
+<<<<<<< HEAD
     Route::get('/users-show/{id}', [AuthController::class, 'show']);
     Route::put('/users-update/{id}', [AuthController::class, 'update']);
     Route::delete('/users-destroy/{id}', [AuthController::class, 'destroy']);
+=======
+    Route::get('/user-show/{id}', [AuthController::class, 'show']);
+    Route::put('/user-update/{id}', [AuthController::class, 'update']);
+    Route::delete('/user-destroy/{id}', [AuthController::class, 'destroy']);
+>>>>>>> 43e95febcb607e6cfe8e179815013d77fd785162
 
 
 
     // ------------------------------ ROLES
     Route::get('/roles', [RoleController::class, 'index']);
-    Route::post('/roles-create', [RoleController::class, 'store']);
-    Route::get('/roles-show/{id}', [RoleController::class, 'show']);
-    Route::put('/roles-update/{id}', [RoleController::class, 'update']);
-    Route::delete('/roles-destroy/{id}', [RoleController::class, 'destroy']);
+    Route::post('/role-create', [RoleController::class, 'store']);
+    Route::get('/role-show/{id}', [RoleController::class, 'show']);
+    Route::put('/role-update/{id}', [RoleController::class, 'update']);
+    Route::delete('/role-destroy/{id}', [RoleController::class, 'destroy']);
 
 
     // ------------------------------- GASTOS
     Route::get('/gastos', [BillController::class, 'index']);
-    Route::post('/gastos-create', [BillController::class, 'store']);
-    Route::get('/gastos-show/{id}', [BillController::class, 'show']);
-    Route::put('/gastos-update/{id}', [BillController::class, 'update']);
-    Route::delete('/gastos-destroy/{id}', [BillController::class, 'destroy']);
+    Route::post('/gasto-create', [BillController::class, 'store']);
+    Route::get('/gasto-show/{id}', [BillController::class, 'show']);
+    Route::put('/gasto-update/{id}', [BillController::class, 'update']);
+    Route::delete('/gasto-destroy/{id}', [BillController::class, 'destroy']);
     Route::get('/totalGastos', [BillController::class, 'totalGastos']);
 
     
 
     // ------------------------------ BANCOS
-    Route::get('/banco', [BankController::class, 'index']);
+    Route::get('/bancos', [BankController::class, 'index']);
     Route::post('/banco-create', [BankController::class, 'store']);
     Route::get('/banco-show/{id}', [BankController::class, 'show']);
     Route::put('/banco-update/{id}', [BankController::class, 'update']);
@@ -67,10 +73,10 @@ Route::post('auth/login', [AuthController::class, 'login']); //INICIAR SESIÓN
 
     // --------------------------------- INGRESOS
     Route::get('/ingresos', [RevenueController::class, 'index']);
-    Route::post('/ingresos-create', [RevenueController::class, 'store']);
-    Route::get('/ingresos-show/{id}', [RevenueController::class, 'show']);
-    Route::put('/ingresos-update/{id}', [RevenueController::class, 'update']);
-    Route::delete('/ingresos-destroy/{id}', [RevenueController::class, 'destroy']);
+    Route::post('/ingreso-create', [RevenueController::class, 'store']);
+    Route::get('/ingreso-show/{id}', [RevenueController::class, 'show']);
+    Route::put('/ingreso-update/{id}', [RevenueController::class, 'update']);
+    Route::delete('/ingreso-destroy/{id}', [RevenueController::class, 'destroy']);
     Route::get('/totalGanancias', [RevenueController::class, 'totalGanancias']);
     Route::get('/totalGananciasBanco', [RevenueController::class, 'totalGananciasBanco']);
 
@@ -84,14 +90,14 @@ Route::post('auth/login', [AuthController::class, 'login']); //INICIAR SESIÓN
     Route::delete('/caja_chica-destroy/{id}', [PettyCashController::class, 'destroy']);
 
     // --------------------------------- ZONA
-    Route::get('/zona', [ZoneController::class, 'index']);
+    Route::get('/zonas', [ZoneController::class, 'index']);
     Route::post('/zona', [ZoneController::class, 'store']);
     Route::get('/zona/{id}', [ZoneController::class, 'show']);
     Route::put('/zona/{id}', [ZoneController::class, 'update']);
     Route::delete('/zona/{id}', [ZoneController::class, 'destroy']);
 
     // --------------------------------- EMPRESA
-    Route::get('/empresa', [CompanyController::class, 'index']);
+    Route::get('/empresas', [CompanyController::class, 'index']);
     Route::post('/empresa-create', [CompanyController::class, 'store']);
     Route::get('/empresa-show/{id}', [CompanyController::class, 'show']);
     Route::put('/empresa-update/{id}', [CompanyController::class, 'update']);

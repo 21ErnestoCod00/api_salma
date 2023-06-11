@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class BankController extends Controller
 {
-    // public function index()
-    // {
-    //     $banks = Bank::all();
-    //     return response()->json($banks);
-    // }
 
     public function index(Request $request)
     {
@@ -33,12 +28,11 @@ class BankController extends Controller
             ->when($bankId, function ($query) use ($bankId) {
                 return $query->where('revenues.bank_id', $bankId);
             })
-            ->groupBy('revenues.bank_id', 'banks.name', 'banks.name')
+            ->groupBy('revenues.bank_id', 'banks.name', 'banks.slog')
             ->get();
 
         return response()->json($revenues);
     }
-
 
 
     public function store(Request $request)
