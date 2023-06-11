@@ -11,14 +11,43 @@ use Illuminate\Support\Facades\Storage;
 class BankController extends Controller
 {
 
+    // public function index(Request $request)
+    // {
+    //     $year = $request->input('year');
+    //     $month = $request->input('month');
+    //     $bankId = $request->input('bank_id');
+
+    //     $revenues = Revenue::select('revenues.bank_id', 'banks.name', 'banks.slog', DB::raw('SUM(revenues.amount) as total_amount'))
+    //         ->leftJoin('banks', 'banks.id', '=', 'revenues.bank_id')
+    //         ->when($year, function ($query) use ($year) {
+    //             return $query->whereYear('revenues.date', $year);
+    //         })
+    //         ->when($month, function ($query) use ($month) {
+    //             return $query->whereMonth('revenues.date', $month);
+    //         })
+    //         ->when($bankId, function ($query) use ($bankId) {
+    //             return $query->where('revenues.bank_id', $bankId);
+    //         })
+    //         ->groupBy('revenues.bank_id', 'banks.name', 'banks.slog')
+    //         ->get();
+
+    //     foreach ($revenues as $revenue) {
+    //         // $revenue->ulImage = Storage::url('app/public/' . $revenue->slog); 
+    //         $revenue->slog = Storage::url('public/' . $revenue->slog);
+    //     }
+
+    //     return response()->json($revenues);
+    // }
+
+
     public function index(Request $request)
     {
         $year = $request->input('year');
         $month = $request->input('month');
         $bankId = $request->input('bank_id');
 
-        $revenues = Revenue::select('revenues.bank_id', 'banks.name','banks.slog', DB::raw('SUM(revenues.amount) as total_amount'))
-            ->leftJoin('banks', 'banks.id', '=', 'revenues.bank_id')
+        $query = Bank::select('banks.id', 'banks.name', 'banks.slog')
+            ->leftJoin('revenues', 'banks.id', '=', 'revenues.bank_id')
             ->when($year, function ($query) use ($year) {
                 return $query->whereYear('revenues.date', $year);
             })
@@ -28,28 +57,45 @@ class BankController extends Controller
             ->when($bankId, function ($query) use ($bankId) {
                 return $query->where('revenues.bank_id', $bankId);
             })
-            ->groupBy('revenues.bank_id', 'banks.name', 'banks.slog')
-            ->get();
+            ->groupBy('banks.id', 'banks.name', 'banks.slog');
 
-        return response()->json($revenues);
+        $revenues = $query->get();
+
+        $revenuesWithImageUrl = $revenues->map(function ($revenue) use ($year, $month) {
+            $revenue->total_amount = Revenue::where('bank_id', $revenue->id)
+                ->when($year, function ($query) use ($year) {
+                    return $query->whereYear('date', $year);
+                })
+                ->when($month, function ($query) use ($month) {
+                    return $query->whereMonth('date', $month);
+                })
+                ->sum('amount');
+
+            $revenue->slog = $revenue->slog ? asset('storage/' . $revenue->slog) : null;
+            return $revenue;
+        });
+
+        return response()->json($revenuesWithImageUrl);
     }
+
+
+
+
+
+
 
 
     public function store(Request $request)
     {
         $bankData = $request->all();
 
-        // Verifica si se envió una imagen
         if ($request->hasFile('slog')) {
             $image = $request->file('slog');
 
-            // Genera un nombre único para la imagen
             $imageName = time() . '.' . $image->getClientOriginalExtension();
 
-            // Guarda la imagen en el directorio de almacenamiento
             $image->storeAs('public/banks', $imageName);
 
-            // Asigna la ruta de la imagen al campo "slog"
             $bankData['slog'] = 'banks/' . $imageName;
         }
 
@@ -101,6 +147,19 @@ class BankController extends Controller
             'data' => $bank,
         ], 200);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
